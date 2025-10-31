@@ -6,6 +6,7 @@ import { useStore } from '@/store/store';
 import AuthGuard from '@/components/AuthGuard';
 import Link from 'next/link';
 import { Users, Calendar, BarChart3, TrendingUp, Activity } from 'lucide-react';
+import NotificationCenter from '@/components/NotificationCenter';
 
 export default function TrainerDashboardPage() {
   const { user, getTrainerStudents, workouts, workoutExecutions, initializeMockData } = useStore();

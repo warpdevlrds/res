@@ -19,7 +19,8 @@
     "clsx": "^2.0.0",
     "tailwind-merge": "^2.2.0",
     "recharts": "^2.10.3",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "jspdf": "^2.5.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
