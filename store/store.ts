@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 export interface User {
   id: string;
@@ -81,9 +81,16 @@ export const useStore = create<StoreState>()(
       
       loadUser: () => {
         if (typeof window !== 'undefined') {
-          const stored = localStorage.getItem('user');
+          const stored = localStorage.getItem('trainer-app-storage');
           if (stored) {
-            set({ user: JSON.parse(stored) });
+            try {
+              const parsed = JSON.parse(stored);
+              if (parsed.state?.user) {
+                set({ user: parsed.state.user });
+              }
+            } catch (e) {
+              console.error('Error loading user:', e);
+            }
           }
         }
       },
@@ -92,6 +99,7 @@ export const useStore = create<StoreState>()(
     }),
     {
       name: 'trainer-app-storage',
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ 
         user: state.user,
         users: state.users,
