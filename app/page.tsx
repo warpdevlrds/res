@@ -1,25 +1,37 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useStore } from '@/store/store';
 import LoginPage from '@/components/LoginPage';
-import TrainerDashboard from '@/components/TrainerDashboard';
-import StudentDashboard from '@/components/StudentDashboard';
+import OfflineIndicator from '@/components/OfflineIndicator';
+import PWAInstaller from '@/components/PWAInstaller';
 
 export default function Home() {
-  const { user, loadUser } = useStore();
+  const { user, initializeMockData } = useStore();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Carregar usu?rio do localStorage ao iniciar
-    loadUser();
+    // Inicializar dados mock
+    initializeMockData();
+
+    // Redirecionar baseado no tipo de usu?rio
+    if (user) {
+      if (user.role === 'trainer') {
+        router.push('/trainer/dashboard');
+      } else {
+        router.push('/student/dashboard');
+      }
+    }
+
     setIsLoading(false);
 
     // Registrar service worker se dispon?vel
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       navigator.serviceWorker.register('/sw.js').catch(console.error);
     }
-  }, [loadUser]);
+  }, [user, router, initializeMockData]);
 
   if (isLoading) {
     return (
@@ -29,9 +41,11 @@ export default function Home() {
     );
   }
 
-  if (!user) {
-    return <LoginPage />;
-  }
-
-  return user.role === 'trainer' ? <TrainerDashboard /> : <StudentDashboard />;
+  return (
+    <>
+      <OfflineIndicator />
+      <PWAInstaller />
+      {!user ? <LoginPage /> : null}
+    </>
+  );
 }

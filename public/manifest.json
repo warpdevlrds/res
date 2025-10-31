@@ -1,12 +1,13 @@
 {
   "name": "Personal Trainer PWA",
   "short_name": "TrainerApp",
-  "description": "Aplicativo para personal trainer gerenciar alunos e para alunos acompanharem treinos",
+  "description": "Aplicativo completo para personal trainer gerenciar alunos e para alunos acompanharem treinos",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0ea5e9",
+  "theme_color": "#2563eb",
   "orientation": "portrait-primary",
+  "scope": "/",
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -19,6 +20,17 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "categories": ["fitness", "health", "lifestyle"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Meus Treinos",
+      "short_name": "Treinos",
+      "description": "Ver meus treinos",
+      "url": "/student/dashboard",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
     }
   ]
 }
