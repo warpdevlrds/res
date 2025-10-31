@@ -15,26 +15,35 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    let user: User;
     if (isLogin) {
       // Simula??o de login - em produ??o, usar autentica??o real
-      const user: User = {
+      user = {
         id: formData.email,
         name: formData.name || formData.email.split('@')[0],
         email: formData.email,
         role: formData.role,
       };
-      setUser(user);
-      addUser(user);
     } else {
       // Simula??o de registro
-      const user: User = {
+      user = {
         id: formData.email,
         name: formData.name,
         email: formData.email,
         role: formData.role,
       };
-      setUser(user);
-      addUser(user);
+    }
+    
+    setUser(user);
+    addUser(user);
+    
+    // Redirecionar ap?s login
+    if (typeof window !== 'undefined') {
+      if (user.role === 'trainer') {
+        window.location.href = '/trainer/dashboard';
+      } else {
+        window.location.href = '/student/dashboard';
+      }
     }
   };
 

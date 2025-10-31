@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/store/store';
-import LoginPage from '@/components/LoginPage';
 import OfflineIndicator from '@/components/OfflineIndicator';
 import PWAInstaller from '@/components/PWAInstaller';
 
@@ -23,6 +22,8 @@ export default function Home() {
       } else {
         router.push('/student/dashboard');
       }
+    } else {
+      router.push('/login');
     }
 
     setIsLoading(false);
@@ -45,7 +46,6 @@ export default function Home() {
     <>
       <OfflineIndicator />
       <PWAInstaller />
-      {!user ? <LoginPage /> : null}
     </>
   );
 }
